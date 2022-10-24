@@ -88,11 +88,11 @@ export default {
       await Promise.all([
         GetPrice.getPrice(this.dataRequestCheckPrice, token),
         GetPrice.getPriceGRAB(this.dataRequestCheckPrice, token),
-        GetPrice.getPrice1(this.dataRequestCheckPrice, token),
+        // GetPrice.getPrice1(this.dataRequestCheckPrice, token),
         GetPrice.getPriceBest(this.dataRequestCheckPrice, token),
         GetPrice.getPriceEMS(this.dataRequestCheckPrice, token),
-        GetPrice.getPriceGHNFW(this.dataRequestCheckPrice, token),
-        GetPrice.getPriceAHAMOVE(this.dataRequestCheckPrice, token),
+        // GetPrice.getPriceGHNFW(this.dataRequestCheckPrice, token),
+        // GetPrice.getPriceAHAMOVE(this.dataRequestCheckPrice, token),
       ]).then((value) => {
         this.dataResponeCheckPrice = value
       }).catch(() => {

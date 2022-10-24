@@ -3,11 +3,6 @@
   <div class=" main-web">
     <div class="main-web-left" >
       <div class="main-web-left-top">
-        <san-pham-da-chon
-            v-if="ngoc"
-            :list-product-choices="productChoiceList"
-        >
-        </san-pham-da-chon>
         <san-pham
             :product-list="productList"
             @choiceProduct="choiceProduct"
@@ -15,7 +10,14 @@
         </san-pham>
       </div>
       <div class="main-web-left-buttom">
+        <san-pham-da-chon
+            v-if="ngoc"
+            :list-product-choices="productChoiceList"
+            @removeProductChoice="removeProductChoice"
+        >
+        </san-pham-da-chon>
         <AddressComponent
+            :list-location="listLocation"
             @changeSenderAddess="changeSenderAddess"
             @changeReceiverAddess="changeReceiverAddess"
         />
@@ -40,7 +42,8 @@
 
 </template>
 <script>
-import GetPrice from "../components//Common/GetPrice"
+import GetPrice from "../components/Common/GetPrice"
+import GetLocation from "@/components/Common/GetLocation";
 import SanPham from "@/components/SanPham";
 import CheckPrice from "@/components/CheckPrice";
 import SanPhamDaChon from "@/components/SanPham/SanPhamDaChon";
@@ -49,8 +52,21 @@ import Loading from "@/components/Loader/Loading";
 // import getPrice from "@/components/Common/GetPrice";
 export default {
   components: {Loading, AddressComponent, SanPhamDaChon, CheckPrice, SanPham},
+  async created() {
+    if (!localStorage.getItem('location')) {
+      this.listLocation = await this.getlocation()
+    } else {
+      this.listLocation = JSON.parse(localStorage.getItem('location'))
+    }
+    let seft = this
+    await this.listLocation.filter(async (item) => {
+      await seft.getWardlocation(item.location_id)
+    })
+
+  },
   data() {
     return {
+      listLocation: {},
       ishowLoading: false,
       dataResponeCheckPrice: {},
       senderAddess: {},
@@ -102,15 +118,52 @@ export default {
       productList: [
         {
           id: 1,
+          name: 'ban la',
+          price: 15000
         },
         {
           id: 2,
+          name: 'ban la',
+          price: 15000
+        },
+        {
+          id: 3,
+          name: 'ban la',
+          price: 15000
         }
       ],
       productChoiceList: Array
     }
   },
   methods: {
+    removeProductChoice(id) {
+      if (this.productChoiceList.length ) {
+
+        let index = this.productChoiceList.findIndex(item =>
+          item.id == id
+        )
+        this.productChoiceList.splice(index, 1);
+
+      }
+    },
+    async getWardlocation(locationId) {
+      if (!localStorage.getItem('location-'+locationId)) {
+        const token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IndYYSJ9.eyJpc3MiOiJrdnNzand0Iiwic3ViIjoyMjQ3MiwiaWF0IjoxNjY1NjY4MjA2LCJleHAiOjE2NjgwODc0MDYsInByZWZlcnJlZF91c2VybmFtZSI6InNoaXB0ZXN0Iiwicm9sZXMiOlsiVXNlciJdLCJrdnVzZXRmYSI6MCwia3Z3YWl0b3RwIjowLCJrdnNlcyI6IjQyZDBmZGY4MjkwMDQzNDdiYmI1NjM0NGM0NzI0NmJhIiwia3Z1aWQiOjIyNDcyLCJrdmxhbmciOiJ2aS1WTiIsImt2dXR5cGUiOjAsImt2dWxpbWl0IjoiRmFsc2UiLCJrdnVhZG1pbiI6IlRydWUiLCJrdnVhY3QiOiJUcnVlIiwia3Z1bGltaXR0cmFucyI6IkZhbHNlIiwia3Z1c2hvd3N1bSI6IlRydWUiLCJrdmJpZCI6MTIzNjAsImt2cmluZGlkIjo5LCJrdnJjb2RlIjoidGVzdHpvbmUxNyIsImt2cmlkIjo0Mzg1MTksImt2dXJpZCI6NDM4NTE5LCJrdnJnaWQiOjE3LCJwZXJtcyI6IiJ9.KpgnkjBcbm8JkhNF4KrDtFf1Y1LgMeiJOGiTKam3bkqxFPwwh7H0TF58GyhV0ccoOIbDxk2v5OsckB7Ub1gqoIe9iGDPUlBzS-W4hspPqHRMTuGzUBvcTSBjK8NWd6ju7No5SRIrrvnUltlKaa64kSXhZqzhmS6d80DE40XO4JN3pWieNF8fiyXcT-7uXkz-UBRnbRDQywpJ9PWmMBQOGUGhqp_GlIQVJUeehmadrrkdcdRSkDQfr6lpnVeJu63KJ-MBireF19aOfJHdHHkpZwXmN6bGugxRHvch_7pEwVS0ntdj0_jmiMOhdXb6A5oWBUisYPgFnz98C0JvezvBMA'
+        const data = await GetLocation.getWardByLocation(token, locationId);
+        if (data.data.data) {
+          localStorage.setItem('location-'+locationId, JSON.stringify(data.data.data))
+        }
+      }
+    },
+    async getlocation() {
+      const token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IndYYSJ9.eyJpc3MiOiJrdnNzand0Iiwic3ViIjoyMjQ3MiwiaWF0IjoxNjY1NjY4MjA2LCJleHAiOjE2NjgwODc0MDYsInByZWZlcnJlZF91c2VybmFtZSI6InNoaXB0ZXN0Iiwicm9sZXMiOlsiVXNlciJdLCJrdnVzZXRmYSI6MCwia3Z3YWl0b3RwIjowLCJrdnNlcyI6IjQyZDBmZGY4MjkwMDQzNDdiYmI1NjM0NGM0NzI0NmJhIiwia3Z1aWQiOjIyNDcyLCJrdmxhbmciOiJ2aS1WTiIsImt2dXR5cGUiOjAsImt2dWxpbWl0IjoiRmFsc2UiLCJrdnVhZG1pbiI6IlRydWUiLCJrdnVhY3QiOiJUcnVlIiwia3Z1bGltaXR0cmFucyI6IkZhbHNlIiwia3Z1c2hvd3N1bSI6IlRydWUiLCJrdmJpZCI6MTIzNjAsImt2cmluZGlkIjo5LCJrdnJjb2RlIjoidGVzdHpvbmUxNyIsImt2cmlkIjo0Mzg1MTksImt2dXJpZCI6NDM4NTE5LCJrdnJnaWQiOjE3LCJwZXJtcyI6IiJ9.KpgnkjBcbm8JkhNF4KrDtFf1Y1LgMeiJOGiTKam3bkqxFPwwh7H0TF58GyhV0ccoOIbDxk2v5OsckB7Ub1gqoIe9iGDPUlBzS-W4hspPqHRMTuGzUBvcTSBjK8NWd6ju7No5SRIrrvnUltlKaa64kSXhZqzhmS6d80DE40XO4JN3pWieNF8fiyXcT-7uXkz-UBRnbRDQywpJ9PWmMBQOGUGhqp_GlIQVJUeehmadrrkdcdRSkDQfr6lpnVeJu63KJ-MBireF19aOfJHdHHkpZwXmN6bGugxRHvch_7pEwVS0ntdj0_jmiMOhdXb6A5oWBUisYPgFnz98C0JvezvBMA'
+      const data = await GetLocation.getlocationcation(token);
+      if (data.data.data) {
+        localStorage.setItem('location', JSON.stringify(data.data.data))
+        return data.data.data;
+      }
+      return {}
+    },
     changeShowLoading() {
       this.ishowLoading = !this.ishowLoading
     },
@@ -141,7 +194,9 @@ export default {
       console.log('data', this.$store.state.dataProductChoice)
     },
     // eslint-disable-next-line no-unused-vars
-    choiceProduct(id) {
+    choiceProduct(product) {
+      this.ngoc = true
+      let id = product.id
       if(typeof this.productChoiceList == "function") this.productChoiceList = []
       let idd = this.productChoiceList.findIndex(item => item.id == id)
       if(idd !== -1)
@@ -149,7 +204,9 @@ export default {
       else
       this.productChoiceList.push({
         'id' : id,
-        'total': 1
+        'total': 1,
+        'name': product.name,
+        'price': product.price
       })
       this.$store.commit('changeDataProductChoice', this.productChoiceList )
     }
@@ -160,6 +217,9 @@ export default {
 .main-web-left-top{
   display: flex;
   flex-grow: 1;
+  gap: 1rem;
+  width: 100%;
+  padding: 3px;
 }
 #ngoc12{
   animation-name: ngoc;

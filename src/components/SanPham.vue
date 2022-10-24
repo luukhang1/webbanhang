@@ -1,7 +1,10 @@
 <template>
-  <div class="product" v-for="product in productList" :key="product.id" @click="choice(product.id)">
+  <div class="product" v-for="product in productList" :key="product.id" @click="choice(product)">
     <img src="https://cdn.mediamart.vn/images/product/-N2Yq4h.jpg">
-    {{product}}
+    <div>
+      <span style="display: block">{{product.name}}</span>
+      <span style="color: #0048ff">{{product.price}}</span>
+    </div>
   </div>
 
 </template>
@@ -24,15 +27,17 @@
 </script>
 <style scoped>
 .product{
+  display: flex;
+  align-items: center;
   animation-name: show;
   animation-iteration-count: 1 ;
-  animation-duration: 10s;
-  width: 48%;
+  animation-duration: 1s;
+  width: 49%;
   height: 100px;
   border: 1px solid;
   border-radius: 15px;
 }
-@-webkit-keyframes show {
+@keyframes show {
   from {
     opacity: 0;
   }
@@ -52,7 +57,7 @@
   box-shadow: 0 0 10px 0px rgb(0,0,0,0.5);
 }
 .product img{
-  max-width: 100%;
+  max-width: 50%;
   max-height: 100%;
   border-radius: 20px;
 }
