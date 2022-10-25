@@ -283,7 +283,6 @@ export default {
   animation-duration: 2s;
   animation-iteration-count: infinite;
   width: 48%;
-  min-width: 400px;
   height: 100%;
   border: 1px solid;
   border-radius: 20px;
@@ -293,11 +292,19 @@ export default {
 }
 .main-web-right{
   width: 48%;
-  min-width: 400px;
   height: 100%;
   border: 1px solid;
   border-radius: 20px;
 }
+@media screen and (max-width: 600px) {
+  .main-web-right{
+    width: 100%;
+  }
+  .main-web-left{
+    width: 100%;
+  }
+}
+
 .btn-right{
   float: right;
 }
