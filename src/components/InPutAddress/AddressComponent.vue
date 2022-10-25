@@ -2,8 +2,8 @@
   <div class="address">
     <div class="address-input">
 <!--      <div class="dfex-row">-->
-        <div class="dfex-row-1">
-          <span @click="clickShowDictrictAddress()" class="address__border" id="district-address">{{districtSenderSelected.name}}</span>
+        <div class="dfex-row-1" id="district-address">
+          <span @click="clickShowDictrictAddress()" class="address__border" >{{districtSenderSelected.name}}</span>
           <div class="address-list" id="add-11" v-show="showDictric" :class="[showDictric ? 'active' : '']">
             <input v-model="itemSelected" class="input-group">
             <ul v-for="location in filterLocation" :key="location.location_id">
@@ -12,8 +12,8 @@
             </ul>
           </div>
         </div>
-        <div class="dfex-row-1">
-          <span @click="clickShowAddress()" class="address__border" id="ward-address">{{ wardSenderSelected.name }}</span>
+        <div class="dfex-row-1" id="ward-address">
+          <span @click="clickShowAddress()" class="address__border" >{{ wardSenderSelected.name }}</span>
           <div class="address-list" id="id-1" v-show="showAddress" :class="[showAddress ? 'active' : '']">
             <input v-model="itemWardSelected" class="input-group">
             <ul v-for="location in filterWardLocation" :key="location.kv_id">
@@ -22,12 +22,12 @@
             </ul>
           </div>
         </div>
-        <div class="dfex-row-1">
-          <span @click="clickShowReceiverDistrictAddress()" class="address__border" id="distric-receiver-address">{{ districtReceiverSelected.name }}</span>
+        <div class="dfex-row-1" id="distric-receiver-address">
+          <span @click="clickShowReceiverDistrictAddress()" class="address__border" >{{ districtReceiverSelected.name }}</span>
           <div class="address-list" id="id-3" v-show="showReceiverAddress" :class="[showReceiverAddress ? 'active' : '']">
             <input v-model="itemSelected" class="input-group">
             <ul v-for="location in filterLocation" :key="location.location_id">
-              <li   class="district-value" @click="updateReceiverDistrictAddress(location.location_id, location.location_name)"><span>{{districtReceiverSelected.name}}<i v-if="location.location_id == districtReceiverSelected.id" class="bi bi-check"></i></span></li>
+              <li   class="district-value" @click="updateReceiverDistrictAddress(location.location_id, location.location_name)"><span>{{location.location_name}}<i v-if="location.location_id == districtReceiverSelected.id" class="bi bi-check"></i></span></li>
               <!--              <li @click="updateSenderDistrictAddress(2)" class="district-value"><span>dia chi 1<i v-if="idDistrictSelected == 2" class="bi bi-check"></i></span></li>-->
             </ul>
 <!--            <ul >-->
@@ -36,8 +36,8 @@
 <!--            </ul>-->
           </div>
         </div>
-        <div class="dfex-row-1">
-          <span @click="clickShowReceiverWardAddress()" class="address__border" id="ward-receiver-address">{{wardReceiverSelected.name}}</span>
+        <div class="dfex-row-1" id="ward-receiver-address">
+          <span @click="clickShowReceiverWardAddress()" class="address__border" >{{wardReceiverSelected.name}}</span>
           <div class="address-list" id="id-4" v-show="showReceiverWardAddress" :class="[showReceiverWardAddress ? 'active' : '']">
             <input v-model="itemWardSelected" class="input-group">
             <ul v-for="location in filterWardLocation" :key="location.kv_id">
@@ -224,16 +224,17 @@ export default {
   border-bottom: 1px solid #42b983;
 }
 .dfex-row-1{
+  width: 49%;
 }
 .dfex-row{
   display: flex;
-  gap: 1rem;
 }
 .address__border{
   display: inline-block;
   border: 1px solid rgb(0,0,0,0.2);
   padding: 8px;
   border-radius: 8px;
+  width: 99%;
   box-shadow: 0 0 15px 0 rgb(0,0,0,0.4);
 }
 .active{
@@ -286,11 +287,10 @@ export default {
 
 }
 .address-input{
-  flex-grow: 1;
   display: flex;
   padding: 10px;
   width: 100%;
-  gap: 1rem;
+  flex-wrap: wrap;
 
 }
 .district-value:hover {

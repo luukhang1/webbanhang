@@ -9,15 +9,15 @@
     </Delivery>
     <div></div>
   </div>
-  <div class="footer-check-price">
-    <button class="btn btn-primary btn-right" @click="getMuitiPrice">check gia</button>
-  </div>
+<!--  <div class="footer-check-price">-->
+<!--    <button class="btn btn-primary btn-right" @click="getMuitiPrice">check gia</button>-->
+<!--  </div>-->
 </template>
 <style scoped>
 .check-price-main{
   border: 1px solid;
   border-radius: 20px;
-  height: 80vh;
+  height: 100%;
 }
 </style>
 <script>
@@ -30,6 +30,9 @@ export default {
     dataCheckPrice: Array,
     listProductChoices: Array,
     listDelivery: Array
+  },
+  created() {
+    this.getMuitiPrice()
   },
   data() {
     return {
@@ -88,11 +91,11 @@ export default {
       await Promise.all([
         GetPrice.getPrice(this.dataRequestCheckPrice, token),
         GetPrice.getPriceGRAB(this.dataRequestCheckPrice, token),
-        // GetPrice.getPrice1(this.dataRequestCheckPrice, token),
+        GetPrice.getPrice1(this.dataRequestCheckPrice, token),
         GetPrice.getPriceBest(this.dataRequestCheckPrice, token),
         GetPrice.getPriceEMS(this.dataRequestCheckPrice, token),
-        // GetPrice.getPriceGHNFW(this.dataRequestCheckPrice, token),
-        // GetPrice.getPriceAHAMOVE(this.dataRequestCheckPrice, token),
+        GetPrice.getPriceGHNFW(this.dataRequestCheckPrice, token),
+        GetPrice.getPriceAHAMOVE(this.dataRequestCheckPrice, token),
       ]).then((value) => {
         this.dataResponeCheckPrice = value
       }).catch(() => {

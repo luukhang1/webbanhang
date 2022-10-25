@@ -55,11 +55,27 @@ export default {
   }
 }
 .product-choice{
+  overflow: auto;
   width: 100%;
   height: 300px;
   border: 1px solid;
   border-radius: 15px;
   background-color: rgb(0,0,0,0.03);
 
+}
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  margin: 10px;
+  box-shadow: inset 0 0 5px grey;
+  border-radius: 10px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  border-radius: 10px;
 }
 </style>

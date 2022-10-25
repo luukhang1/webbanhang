@@ -130,6 +130,31 @@ export default {
           id: 3,
           name: 'ban la',
           price: 15000
+        },
+        {
+          id: 4,
+          name: 'ban la',
+          price: 15000
+        },
+        {
+          id: 5,
+          name: 'ban la',
+          price: 15000
+        },
+        {
+          id: 6,
+          name: 'ban la',
+          price: 15000
+        },
+        {
+          id: 7,
+          name: 'ban la',
+          price: 15000
+        },
+        {
+          id: 8,
+          name: 'ban la',
+          price: 15000
         }
       ],
       productChoiceList: Array
@@ -216,9 +241,9 @@ export default {
 <style scoped lang="css">
 .main-web-left-top{
   display: flex;
-  flex-grow: 1;
-  gap: 1rem;
+  flex-wrap: wrap;
   width: 100%;
+  gap: 1%;
   padding: 3px;
 }
 #ngoc12{
@@ -233,12 +258,12 @@ export default {
   -webkit-animation-name: ngoc;
 }
 .main-web{
-
   width: 100%;
   /*height: 100vh;*/
   border: 1px solid;
   border-radius:20px;
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
 
 }
@@ -258,6 +283,7 @@ export default {
   animation-duration: 2s;
   animation-iteration-count: infinite;
   width: 48%;
+  min-width: 400px;
   height: 100%;
   border: 1px solid;
   border-radius: 20px;
@@ -267,6 +293,7 @@ export default {
 }
 .main-web-right{
   width: 48%;
+  min-width: 400px;
   height: 100%;
   border: 1px solid;
   border-radius: 20px;

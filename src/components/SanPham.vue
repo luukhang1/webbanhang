@@ -28,11 +28,12 @@
 <style scoped>
 .product{
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   animation-name: show;
   animation-iteration-count: 1 ;
   animation-duration: 1s;
-  width: 49%;
+  width: 32.3%;
   height: 100px;
   border: 1px solid;
   border-radius: 15px;

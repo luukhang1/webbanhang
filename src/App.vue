@@ -2,7 +2,6 @@
   <MainWeb>
 
   </MainWeb>
-  <button class="btn btn-dark">Ngoc</button>
 </template>
 
 <script>

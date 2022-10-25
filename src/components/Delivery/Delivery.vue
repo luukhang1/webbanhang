@@ -1,20 +1,20 @@
 <template>
-  <div style="overflow: auto;height: 100%">
-    <h1>Day la hang van chuyen</h1>
-    <div  v-for="data in listDelivery" :key="data.code"  >
-     <div class="delevery-class" v-if="data.totalPrice >0">
-       <input type="radio" name="select">
-       <img :src="getUrl(data.image)" class="img-price">
-       <div class="discription">
-         <div class="discription__custum">
-           <span>{{data.code}}</span>
-           <span>{{data.description}}</span>
-         </div>
-       </div>
-       <span  class="price">{{data.totalPrice}}</span>
-     </div>
+  <h1>Day la hang van chuyen</h1>
+    <div class="delivery-animation">
+      <div  v-for="data in listDelivery" :key="data.code"  >
+        <div class="delevery-class" v-if="data.totalPrice >0" style="height: 100%; display: flex; flex-basis: 30%">
+          <input type="radio" name="select" class="width-22">
+          <img :src="getUrl(data.image)" class="img-price width-22">
+          <div class="discription width-22">
+            <div class="discription__custum">
+              <span>{{data.code}}</span>
+              <span>{{data.description}}</span>
+            </div>
+          </div>
+          <span  class="price width-22">{{data.totalPrice}}</span>
+        </div>
+      </div>
     </div>
-  </div>
 </template>
 <script>
 export default {
@@ -53,6 +53,22 @@ export default {
 }
 </script>
 <style scoped>
+.delivery-animation{
+  overflow: auto;
+  max-height: 800px;
+  animation: animation 2s 1;
+}
+@keyframes animation {
+  from{
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+.width-22 {
+  width: 22%;
+}
 .img-price{
   width: 100px;
   padding-left: 20px;
